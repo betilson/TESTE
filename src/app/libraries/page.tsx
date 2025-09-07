@@ -16,7 +16,7 @@ export default async function LibrariesPage() {
     `);
 
   return (
-    <div className="container py-8">
+    <div className="container py-8 animate-in fade-in-0 duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold">Bibliotecas Participantes</h1>

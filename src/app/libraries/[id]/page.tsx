@@ -28,7 +28,7 @@ export default async function LibraryDetailsPage({ params }: PageProps) {
   }
 
   return (
-    <div className="container py-8">
+    <div className="container py-8 animate-in fade-in-0 duration-500">
       <div className="mb-8">
         <Button variant="outline" size="sm" asChild>
           <Link href="/libraries">
@@ -63,7 +63,7 @@ export default async function LibraryDetailsPage({ params }: PageProps) {
         {library.books && library.books.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {(library.books as any[]).map((book) => (
-              <Card key={book.id} className="flex flex-col">
+              <Card key={book.id} className="flex flex-col transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
                 <CardHeader className="p-0">
                   <div className="aspect-[3/4] bg-muted rounded-t-lg flex items-center justify-center">
                     <Book className="h-16 w-16 text-muted-foreground/50" />

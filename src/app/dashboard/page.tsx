@@ -188,7 +188,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container py-8">
+    <div className="container py-8 animate-in fade-in-0 duration-500">
       <div className="mb-8">
         <h1 className="text-3xl font-bold flex items-center gap-3">
           <Library className="h-8 w-8 text-primary" />
