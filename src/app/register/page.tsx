@@ -20,7 +20,6 @@ const librarySchema = z.object({
   address: z.string().min(1, "Endereço é obrigatório"),
   phone: z.string().optional(),
   website: z.string().url("Por favor, insira uma URL válida").optional().or(z.literal("")),
-  description: z.string().optional(),
 });
 
 type LibraryFormValues = z.infer<typeof librarySchema>;
@@ -179,22 +178,6 @@ export default function RegisterLibraryPage() {
               />
               {errors.website && (
                 <p className="text-sm text-red-500">{errors.website.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description" className="flex items-center gap-2">
-                <FileText className="h-4 w-4" />
-                Descrição
-              </Label>
-              <Textarea
-                id="description"
-                {...register("description")}
-                placeholder="Conte-nos sobre sua biblioteca, sua história, missão e serviços oferecidos..."
-                rows={4}
-              />
-              {errors.description && (
-                <p className="text-sm text-red-500">{errors.description.message}</p>
               )}
             </div>
 
