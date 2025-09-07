@@ -50,7 +50,7 @@ export default function RegisterLibraryPage() {
         .single();
 
       if (libraryError) {
-        console.error("Library insert error:", libraryError);
+        console.error("Library insertion error:", libraryError);
         throw libraryError;
       }
 
