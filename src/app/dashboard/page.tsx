@@ -148,7 +148,7 @@ export default function DashboardPage() {
 
   if (!session || (profile && profile.role !== 'library_admin')) {
     return (
-      <div className="container py-8 text-center">
+      <div className="container py-8 text-center animate-in fade-in-0 duration-500">
         <Card className="max-w-md mx-auto">
           <CardHeader>
             <CardTitle className="flex items-center justify-center gap-2">
@@ -172,13 +172,13 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <div className="container py-8 text-center text-red-500">{error}</div>
+      <div className="container py-8 text-center text-red-500 animate-in fade-in-0 duration-500">{error}</div>
     );
   }
 
   if (!library) {
     return (
-      <div className="container py-8 text-center">
+      <div className="container py-8 text-center animate-in fade-in-0 duration-500">
         <p>Nenhuma biblioteca encontrada para seu perfil.</p>
         <Button asChild className="mt-4">
           <Link href="/register">Registrar sua Biblioteca</Link>
@@ -199,7 +199,7 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-1">
-          <Card>
+          <Card className="animate-in fade-in-up" style={{ animationDelay: '0s' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <PlusCircle className="h-5 w-5" />
@@ -237,7 +237,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="lg:col-span-2">
-          <Card>
+          <Card className="animate-in fade-in-up" style={{ animationDelay: '0.1s' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BookOpenCheck className="h-5 w-5" />
@@ -250,10 +250,11 @@ export default function DashboardPage() {
             <CardContent>
               {library.books.length > 0 ? (
                 <ul className="space-y-3">
-                  {library.books.map(book => (
+                  {library.books.map((book, index) => (
                     <li 
                       key={book.id} 
                       className="flex items-center justify-between p-3 border rounded-lg bg-background hover:bg-muted/50 transition-colors group animate-in fade-in-0 slide-in-from-top-2 duration-300"
+                      style={{ animationDelay: `${index * 0.05}s` }}
                     >
                       <div>
                         <p className="font-semibold">{book.title}</p>

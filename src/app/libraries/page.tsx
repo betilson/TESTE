@@ -51,7 +51,7 @@ export default function LibrariesPage() {
   );
 
   return (
-    <div className="container py-8">
+    <div className="container py-8 animate-in fade-in-0 duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-bold md:text-3xl">Bibliotecas Participantes</h1>
@@ -84,8 +84,12 @@ export default function LibrariesPage() {
 
       {!loading && !error && filteredLibraries.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredLibraries.map((library) => (
-            <Card key={library.id} className="hover:shadow-lg transition-all hover:-translate-y-1">
+          {filteredLibraries.map((library, index) => (
+            <Card 
+              key={library.id} 
+              className="hover:shadow-lg transition-all hover:-translate-y-1 animate-in fade-in-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <div className="bg-primary/10 p-2 rounded-lg">

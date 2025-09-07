@@ -75,7 +75,7 @@ export default function LibraryDetailsPage({ params }: PageProps) {
   );
 
   return (
-    <div className="container py-8">
+    <div className="container py-8 animate-in fade-in-0 duration-500">
       <div className="mb-8">
         <Button variant="outline" size="sm" asChild>
           <Link href="/libraries">
@@ -111,8 +111,12 @@ export default function LibraryDetailsPage({ params }: PageProps) {
         </h2>
         {filteredBooks.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {filteredBooks.map((book) => (
-              <Card key={book.id} className="flex flex-col">
+            {filteredBooks.map((book, index) => (
+              <Card 
+                key={book.id} 
+                className="flex flex-col animate-in fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <CardHeader className="p-0">
                   <div className="aspect-[3/4] bg-muted rounded-t-lg flex items-center justify-center">
                     <Book className="h-16 w-16 text-muted-foreground/50" />
