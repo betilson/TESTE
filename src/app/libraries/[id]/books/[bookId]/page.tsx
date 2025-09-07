@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowLeft, Book, User, Tag, Calendar, FileText, Loader2, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Book, User, Tag, Calendar, FileText, Image as ImageIcon, Loader2, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
 
 interface BookData {
@@ -24,7 +24,11 @@ interface BookData {
   } | null;
 }
 
-export default function BookDetailsPage({ params }: { params: Promise<{ id: string; bookId: string }> }) {
+type PageProps = {
+  params: Promise<{ id: string; bookId: string }>;
+};
+
+export default function BookDetailsPage({ params }: PageProps) {
   const unwrappedParams = use(params);
   const libraryId = unwrappedParams.id;
   const bookId = unwrappedParams.bookId;
