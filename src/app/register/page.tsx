@@ -4,12 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Library, MapPin, Phone, Globe, FileText, LogIn } from "lucide-react";
+import { Library, MapPin, Phone, Globe, LogIn } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import Link from "next/link";
@@ -50,7 +49,10 @@ export default function RegisterLibraryPage() {
         .select()
         .single();
 
-      if (libraryError) throw libraryError;
+      if (libraryError) {
+        console.error("Library insert error:", libraryError);
+        throw libraryError;
+      }
 
       // 2. Atualiza a role do usuário para 'library_admin'
       const { error: profileError } = await supabase
@@ -58,7 +60,10 @@ export default function RegisterLibraryPage() {
         .update({ role: "library_admin" })
         .eq("id", session.user.id);
 
-      if (profileError) throw profileError;
+      if (profileError) {
+        console.error("Profile update error:", profileError);
+        throw profileError;
+      }
 
       toast.success("Biblioteca registrada com sucesso!");
       reset();
