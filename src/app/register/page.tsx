@@ -78,7 +78,7 @@ export default function RegisterLibraryPage() {
 
   if (!session) {
     return (
-      <div className="container py-8 max-w-2xl text-center">
+      <div className="container py-8 max-w-2xl text-center animate-in fade-in-0 duration-500">
         <Card>
           <CardHeader>
             <CardTitle>Acesso Restrito</CardTitle>
@@ -100,7 +100,7 @@ export default function RegisterLibraryPage() {
   }
 
   return (
-    <div className="container py-8 max-w-2xl">
+    <div className="container py-8 max-w-2xl animate-in fade-in-0 duration-500">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold">Registre sua Biblioteca</h1>
         <p className="text-muted-foreground mt-2">

@@ -249,19 +249,28 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               {library.books.length > 0 ? (
-                <div className="space-y-4">
+                <ul className="space-y-3">
                   {library.books.map(book => (
-                    <div key={book.id} className="flex items-center justify-between p-3 border rounded-lg bg-muted/50">
+                    <li 
+                      key={book.id} 
+                      className="flex items-center justify-between p-3 border rounded-lg bg-background hover:bg-muted/50 transition-colors group animate-in fade-in-0 slide-in-from-top-2 duration-300"
+                    >
                       <div>
                         <p className="font-semibold">{book.title}</p>
                         <p className="text-sm text-muted-foreground">{book.author || "Autor desconhecido"}</p>
                       </div>
-                      <Button variant="ghost" size="icon" onClick={() => deleteBook(book.id)}>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={() => deleteBook(book.id)}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
                         <Trash2 className="h-4 w-4 text-red-500" />
+                        <span className="sr-only">Excluir livro</span>
                       </Button>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               ) : (
                 <div className="text-center py-8">
                   <p className="text-muted-foreground">Nenhum livro cadastrado ainda.</p>

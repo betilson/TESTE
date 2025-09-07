@@ -19,8 +19,8 @@ export default function LoginPage() {
   }, [session, router]);
 
   return (
-    <div className="container flex items-center justify-center min-h-screen py-12">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-muted p-4 animate-in fade-in-0 duration-500">
+      <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Acesse sua Conta</CardTitle>
           <CardDescription>
