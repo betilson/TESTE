@@ -23,27 +23,16 @@ type LibraryData = {
 };
 
 type PageProps = {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 };
 
 export default function LibraryDetailsPage({ params }: PageProps) {
   const [library, setLibrary] = useState<LibraryData | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
-  const [libraryId, setLibraryId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const unwrapParams = async () => {
-      const unwrappedParams = await params;
-      setLibraryId(unwrappedParams.id);
-    };
-    unwrapParams();
-  }, [params]);
 
   useEffect(() => {
     const fetchLibrary = async () => {
-      if (!libraryId) return;
-      
       setLoading(true);
       const { data, error } = await supabase
         .from("libraries")
@@ -53,7 +42,7 @@ export default function LibraryDetailsPage({ params }: PageProps) {
           address,
           books ( id, title, author )
         `)
-        .eq("id", libraryId)
+        .eq("id", params.id)
         .single();
 
       if (error || !data) {
@@ -66,7 +55,7 @@ export default function LibraryDetailsPage({ params }: PageProps) {
     };
 
     fetchLibrary();
-  }, [libraryId]);
+  }, [params.id]);
 
   if (loading) {
     return (
