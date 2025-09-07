@@ -130,7 +130,9 @@ export default function LibraryDetailsPage({ params }: PageProps) {
                   </p>
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
-                  <Button className="w-full" variant="secondary" size="sm">Ver Detalhes</Button>
+                  <Button className="w-full" variant="secondary" size="sm" asChild>
+                    <Link href={`/libraries/${library.id}/books/${book.id}`}>Ver Detalhes</Link>
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
