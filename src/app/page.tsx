@@ -31,12 +31,6 @@ export default function Home() {
                 Explorar Bibliotecas
               </Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="text-base">
-              <Link href="/register">
-                <Users className="mr-2 h-5 w-5" />
-                Registrar Biblioteca
-              </Link>
-            </Button>
           </div>
         </div>
       </div>
