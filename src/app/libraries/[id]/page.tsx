@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { ArrowLeft, Book, Library, Search, User, AlertTriangle, Loader2 } from "lucide-react";
+import { ArrowLeft, Book, Library, Search, User, Loader2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -23,11 +23,7 @@ type LibraryData = {
   books: Book[];
 };
 
-type PageProps = {
-  params: Promise<{ id: string }>;
-};
-
-export default function LibraryDetailsPage({ params }: PageProps) {
+export default function LibraryDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params);
   const libraryId = unwrappedParams.id;
   
@@ -70,7 +66,7 @@ export default function LibraryDetailsPage({ params }: PageProps) {
   }
 
   if (!library) {
-    return null; // or a custom not found component
+    return notFound();
   }
 
   const filteredBooks = library.books.filter(book =>
