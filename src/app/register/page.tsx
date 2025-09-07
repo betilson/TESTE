@@ -67,8 +67,8 @@ export default function RegisterLibraryPage() {
       router.push(`/libraries/${libraryData.id}`);
 
     } catch (error: any) {
+      console.error("Registration error details:", error);
       toast.error("Falha ao registrar biblioteca. Por favor, tente novamente.");
-      console.error("Registration error:", error.message);
     }
   };
 
