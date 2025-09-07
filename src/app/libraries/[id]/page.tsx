@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { ArrowLeft, Book, Library, Search, User } from "lucide-react";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 
 // Mock data - In a real app, this would come from Supabase
 const librariesData = [
@@ -32,7 +32,8 @@ const librariesData = [
   // Add other libraries here if needed
 ];
 
-export default function LibraryDetailsPage({ params }: { params: { id: string } }) {
+export default function LibraryDetailsPage() {
+  const params = useParams<{ id: string }>();
   const library = librariesData.find((lib) => lib.id === params.id);
 
   if (!library) {
