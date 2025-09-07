@@ -4,11 +4,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Library, MapPin, Phone, Globe, LogIn } from "lucide-react";
+import { Library, MapPin, Phone, Globe, FileText, LogIn } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import Link from "next/link";
@@ -19,6 +20,7 @@ const librarySchema = z.object({
   address: z.string().min(1, "Endereço é obrigatório"),
   phone: z.string().optional(),
   website: z.string().url("Por favor, insira uma URL válida").optional().or(z.literal("")),
+  description: z.string().optional(),
 });
 
 type LibraryFormValues = z.infer<typeof librarySchema>;
@@ -121,7 +123,7 @@ export default function RegisterLibraryPage() {
             Informações da Biblioteca
           </CardTitle>
           <CardDescription>
-            Preencha os dados abaixo para registrar sua instituição em nossa plataforma
+            Preencha os dados abaixo para registrar sua instituição em nossa plataforme
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -184,6 +186,19 @@ export default function RegisterLibraryPage() {
               {errors.website && (
                 <p className="text-sm text-red-500">{errors.website.message}</p>
               )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description" className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Descrição da Biblioteca
+              </Label>
+              <Textarea
+                id="description"
+                {...register("description")}
+                placeholder="Descreva brevemente sua biblioteca..."
+                rows={3}
+              />
             </div>
 
             <div className="flex justify-end pt-4">
