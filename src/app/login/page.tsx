@@ -17,6 +17,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   const { session } = useAuth();
   const router = useRouter();
 
@@ -45,7 +46,8 @@ export default function LoginPage() {
     }
   };
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
 
     try {
@@ -54,6 +56,10 @@ export default function LoginPage() {
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/auth/callback`,
+          data: {
+            first_name: "",
+            last_name: ""
+          }
         },
       });
 
@@ -63,6 +69,9 @@ export default function LoginPage() {
       }
 
       toast.success("Conta criada com sucesso! Verifique seu email para confirmar.");
+      setIsSignUp(false);
+      setEmail("");
+      setPassword("");
     } catch (error: any) {
       toast.error("Erro ao criar conta. Tente novamente.");
       console.error("Sign up error:", error);
@@ -82,14 +91,16 @@ export default function LoginPage() {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl flex items-center justify-center gap-2">
             <LogIn className="h-6 w-6" />
-            Acesse sua Conta
+            {isSignUp ? "Criar Conta" : "Acesse sua Conta"}
           </CardTitle>
           <CardDescription>
-            Faça login ou crie uma conta para registrar sua biblioteca
+            {isSignUp 
+              ? "Crie uma conta para registrar sua biblioteca" 
+              : "Faça login para acessar sua conta"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={isSignUp ? handleSignUp : handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email" className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
@@ -118,6 +129,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  minLength={6}
                 />
                 <Button
                   type="button"
@@ -137,17 +149,17 @@ export default function LoginPage() {
 
             <div className="space-y-4">
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Carregando..." : "Entrar"}
+                {loading ? "Carregando..." : (isSignUp ? "Criar Conta" : "Entrar")}
               </Button>
               
               <Button
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={handleSignUp}
+                onClick={() => setIsSignUp(!isSignUp)}
                 disabled={loading}
               >
-                {loading ? "Carregando..." : "Criar Conta"}
+                {isSignUp ? "Já tenho uma conta" : "Criar nova conta"}
               </Button>
             </div>
           </form>
