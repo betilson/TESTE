@@ -9,7 +9,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Library, MapPin, Phone, Globe, FileText } from "lucide-react";
+import { Library, MapPin, Phone, Globe, FileText, LogIn } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const librarySchema = z.object({
   name: z.string().min(1, "Nome da biblioteca é obrigatório"),
@@ -22,6 +26,8 @@ const librarySchema = z.object({
 type LibraryFormValues = z.infer<typeof librarySchema>;
 
 export default function RegisterLibraryPage() {
+  const { session, loading } = useAuth();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -32,20 +38,66 @@ export default function RegisterLibraryPage() {
   });
 
   const onSubmit = async (data: LibraryFormValues) => {
+    if (!session) {
+      toast.error("Você precisa estar logado para registrar uma biblioteca.");
+      return;
+    }
+
     try {
-      // In a real app, this would connect to Supabase
-      console.log("Library registration data:", data);
-      
-      // Show success message
+      // 1. Insere a biblioteca no banco de dados
+      const { data: libraryData, error: libraryError } = await supabase
+        .from("libraries")
+        .insert([{ ...data, profile_id: session.user.id }])
+        .select()
+        .single();
+
+      if (libraryError) throw libraryError;
+
+      // 2. Atualiza a role do usuário para 'library_admin'
+      const { error: profileError } = await supabase
+        .from("profiles")
+        .update({ role: "library_admin" })
+        .eq("id", session.user.id);
+
+      if (profileError) throw profileError;
+
       toast.success("Biblioteca registrada com sucesso!");
-      
-      // Reset form
       reset();
-    } catch (error) {
+      // Redireciona para a página da biblioteca recém-criada
+      router.push(`/libraries/${libraryData.id}`);
+
+    } catch (error: any) {
       toast.error("Falha ao registrar biblioteca. Por favor, tente novamente.");
-      console.error("Registration error:", error);
+      console.error("Registration error:", error.message);
     }
   };
+
+  if (loading) {
+    return <div className="container py-8 text-center">Carregando...</div>;
+  }
+
+  if (!session) {
+    return (
+      <div className="container py-8 max-w-2xl text-center">
+        <Card>
+          <CardHeader>
+            <CardTitle>Acesso Restrito</CardTitle>
+            <CardDescription>
+              Você precisa fazer login para registrar uma nova biblioteca.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/login">
+                <LogIn className="mr-2 h-4 w-4" />
+                Ir para a página de Login
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="container py-8 max-w-2xl">
