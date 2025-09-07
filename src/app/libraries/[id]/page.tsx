@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { use } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { ArrowLeft, Book, Library, Search, User, AlertTriangle, Loader2 } from "ucide-react";
+import { ArrowLeft, Book, Library, Search, User, AlertTriangle, Loader2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -27,16 +28,15 @@ type PageProps = {
 };
 
 export default function LibraryDetailsPage({ params }: PageProps) {
+  const unwrappedParams = use(params);
+  const libraryId = unwrappedParams.id;
+  
   const [library, setLibrary] = useState<LibraryData | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
-  const unwrappedParams = React.use(params);
-  const libraryId = unwrappedParams.id;
 
   useEffect(() => {
     const fetchLibrary = async () => {
-      if (!libraryId) return;
-      
       setLoading(true);
       const { data, error } = await supabase
         .from("libraries")

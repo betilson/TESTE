@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { use } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,18 +29,17 @@ type PageProps = {
 };
 
 export default function BookDetailsPage({ params }: PageProps) {
+  const unwrappedParams = use(params);
+  const libraryId = unwrappedParams.id;
+  const bookId = unwrappedParams.bookId;
+  
   const [book, setBook] = useState<BookData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const unwrappedParams = React.use(params);
-  const libraryId = unwrappedParams.id;
-  const bookId = unwrappedParams.bookId;
 
   useEffect(() => {
     const fetchBookDetails = async () => {
-      if (!libraryId || !bookId) return;
-      
       setLoading(true);
       setError(null);
       try {
