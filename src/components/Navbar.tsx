@@ -135,6 +135,28 @@ export default function Navbar() {
                 </SheetHeader>
                 <div className="flex flex-col space-y-4 py-6">
                   <NavLinks />
+                  {session && (
+                    <>
+                      {profile?.role === 'library_admin' && (
+                        <Button variant="ghost" asChild className="justify-start">
+                          <Link href="/dashboard" onClick={() => setIsSheetOpen(false)}>
+                            <Library className="mr-2 h-4 w-4" />
+                            Meu Painel
+                          </Link>
+                        </Button>
+                      )}
+                      <Button variant="ghost" asChild className="justify-start">
+                        <Link href="/profile" onClick={() => setIsSheetOpen(false)}>
+                          <User className="mr-2 h-4 w-4" />
+                          Perfil
+                        </Link>
+                      </Button>
+                      <Button variant="outline" onClick={() => { signOut(); setIsSheetOpen(false); }} className="justify-start">
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Sair
+                      </Button>
+                    </>
+                  )}
                   {!session && (
                     <>
                       <Button variant="outline" asChild>
