@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Book, MapPin, Search } from "lucide-react";
+import { Book, MapPin, Search, Library } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 export default function LibrariesPage() {
