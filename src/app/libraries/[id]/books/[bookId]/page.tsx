@@ -24,7 +24,7 @@ interface BookData {
 }
 
 type PageProps = {
-  params: { id: string; bookId: string };
+  params: Promise<{ id: string; bookId: string }>;
 };
 
 export default function BookDetailsPage({ params }: PageProps) {
@@ -32,9 +32,14 @@ export default function BookDetailsPage({ params }: PageProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const unwrappedParams = React.use(params);
+  const libraryId = unwrappedParams.id;
+  const bookId = unwrappedParams.bookId;
 
   useEffect(() => {
     const fetchBookDetails = async () => {
+      if (!libraryId || !bookId) return;
+      
       setLoading(true);
       setError(null);
       try {
@@ -51,8 +56,8 @@ export default function BookDetailsPage({ params }: PageProps) {
             library_id,
             libraries ( name )
           `)
-          .eq("id", params.bookId)
-          .eq("library_id", params.id)
+          .eq("id", bookId)
+          .eq("library_id", libraryId)
           .single();
 
         if (error || !data) {
@@ -69,7 +74,7 @@ export default function BookDetailsPage({ params }: PageProps) {
     };
 
     fetchBookDetails();
-  }, [params.bookId, params.id]);
+  }, [bookId, libraryId]);
 
   if (loading) {
     return (

@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { ArrowLeft, Book, Library, Search, User, AlertTriangle, Loader2 } from "lucide-react";
+import { ArrowLeft, Book, Library, Search, User, AlertTriangle, Loader2 } from "ucide-react";
 import { notFound } from "next/navigation";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -23,16 +23,20 @@ type LibraryData = {
 };
 
 type PageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default function LibraryDetailsPage({ params }: PageProps) {
   const [library, setLibrary] = useState<LibraryData | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const unwrappedParams = React.use(params);
+  const libraryId = unwrappedParams.id;
 
   useEffect(() => {
     const fetchLibrary = async () => {
+      if (!libraryId) return;
+      
       setLoading(true);
       const { data, error } = await supabase
         .from("libraries")
@@ -42,7 +46,7 @@ export default function LibraryDetailsPage({ params }: PageProps) {
           address,
           books ( id, title, author )
         `)
-        .eq("id", params.id)
+        .eq("id", libraryId)
         .single();
 
       if (error || !data) {
@@ -55,7 +59,7 @@ export default function LibraryDetailsPage({ params }: PageProps) {
     };
 
     fetchLibrary();
-  }, [params.id]);
+  }, [libraryId]);
 
   if (loading) {
     return (
