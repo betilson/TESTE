@@ -87,7 +87,7 @@ export default function LibraryDetailsPage({ params }: PageProps) {
 
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold flex items-center gap-3">
+          <h1 className="text-2xl font-bold md:text-3xl flex items-center gap-3">
             <Library className="h-8 w-8 text-primary" />
             {library.name}
           </h1>
@@ -110,7 +110,7 @@ export default function LibraryDetailsPage({ params }: PageProps) {
           Acervo de Livros
         </h2>
         {filteredBooks.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {filteredBooks.map((book) => (
               <Card key={book.id} className="flex flex-col">
                 <CardHeader className="p-0">
@@ -119,14 +119,14 @@ export default function LibraryDetailsPage({ params }: PageProps) {
                   </div>
                 </CardHeader>
                 <CardContent className="p-4 flex-grow">
-                  <CardTitle className="text-lg font-semibold leading-tight mb-1">{book.title}</CardTitle>
+                  <CardTitle className="text-base font-semibold leading-tight mb-1">{book.title}</CardTitle>
                   <p className="text-sm text-muted-foreground flex items-center gap-1">
                     <User className="h-3 w-3" />
                     {book.author || "Autor desconhecido"}
                   </p>
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
-                  <Button className="w-full" variant="secondary">Ver Detalhes</Button>
+                  <Button className="w-full" variant="secondary" size="sm">Ver Detalhes</Button>
                 </CardFooter>
               </Card>
             ))}

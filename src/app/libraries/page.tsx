@@ -54,7 +54,7 @@ export default function LibrariesPage() {
     <div className="container py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Bibliotecas Participantes</h1>
+          <h1 className="text-2xl font-bold md:text-3xl">Bibliotecas Participantes</h1>
           <p className="text-muted-foreground">Explore nossa coleção de bibliotecas cadastradas</p>
         </div>
         <div className="relative w-full md:w-80">
