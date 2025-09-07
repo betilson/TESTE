@@ -92,7 +92,7 @@ export default function Navbar() {
                   <Link href="/profile">
                     <User className="mr-2 h-4 w-4" />
                     <span>Perfil</span>
-                  </Link>
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut}>
