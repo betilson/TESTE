@@ -9,12 +9,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
+import { Library, MapPin, Phone, Globe, FileText } from "lucide-react";
 
 const librarySchema = z.object({
-  name: z.string().min(1, "Library name is required"),
-  address: z.string().min(1, "Address is required"),
+  name: z.string().min(1, "Nome da biblioteca é obrigatório"),
+  address: z.string().min(1, "Endereço é obrigatório"),
   phone: z.string().optional(),
-  website: z.string().url("Please enter a valid URL").optional().or(z.literal("")),
+  website: z.string().url("Por favor, insira uma URL válida").optional().or(z.literal("")),
   description: z.string().optional(),
 });
 
@@ -36,33 +37,48 @@ export default function RegisterLibraryPage() {
       console.log("Library registration data:", data);
       
       // Show success message
-      toast.success("Library registered successfully!");
+      toast.success("Biblioteca registrada com sucesso!");
       
       // Reset form
       reset();
     } catch (error) {
-      toast.error("Failed to register library. Please try again.");
+      toast.error("Falha ao registrar biblioteca. Por favor, tente novamente.");
       console.error("Registration error:", error);
     }
   };
 
   return (
     <div className="container py-8 max-w-2xl">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold">Registre sua Biblioteca</h1>
+        <p className="text-muted-foreground mt-2">
+          Junte-se à nossa plataforma para disponibilizar o acervo da sua biblioteca online
+        </p>
+      </div>
+      
       <Card>
         <CardHeader>
-          <CardTitle>Register Your Library</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <div className="bg-primary/10 p-2 rounded-lg">
+              <Library className="h-5 w-5 text-primary" />
+            </div>
+            Informações da Biblioteca
+          </CardTitle>
           <CardDescription>
-            Join our platform to make your library's collection available online
+            Preencha os dados abaixo para registrar sua instituição em nossa plataforma
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Library Name *</Label>
+              <Label htmlFor="name" className="flex items-center gap-2">
+                <Library className="h-4 w-4" />
+                Nome da Biblioteca *
+              </Label>
               <Input
                 id="name"
                 {...register("name")}
-                placeholder="Enter your library name"
+                placeholder="Digite o nome completo da biblioteca"
               />
               {errors.name && (
                 <p className="text-sm text-red-500">{errors.name.message}</p>
@@ -70,11 +86,14 @@ export default function RegisterLibraryPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="address">Address *</Label>
+              <Label htmlFor="address" className="flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                Endereço Completo *
+              </Label>
               <Input
                 id="address"
                 {...register("address")}
-                placeholder="Enter full address"
+                placeholder="Ex: Rua das Flores, 123 - Centro - Cidade/UF"
               />
               {errors.address && (
                 <p className="text-sm text-red-500">{errors.address.message}</p>
@@ -82,11 +101,14 @@ export default function RegisterLibraryPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="phone" className="flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                Telefone de Contato
+              </Label>
               <Input
                 id="phone"
                 {...register("phone")}
-                placeholder="Enter phone number"
+                placeholder="(00) 00000-0000"
               />
               {errors.phone && (
                 <p className="text-sm text-red-500">{errors.phone.message}</p>
@@ -94,11 +116,14 @@ export default function RegisterLibraryPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="website">Website</Label>
+              <Label htmlFor="website" className="flex items-center gap-2">
+                <Globe className="h-4 w-4" />
+                Site Oficial
+              </Label>
               <Input
                 id="website"
                 {...register("website")}
-                placeholder="https://example.com"
+                placeholder="https://www.suabiblioteca.org.br"
               />
               {errors.website && (
                 <p className="text-sm text-red-500">{errors.website.message}</p>
@@ -106,11 +131,14 @@ export default function RegisterLibraryPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description" className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Descrição
+              </Label>
               <Textarea
                 id="description"
                 {...register("description")}
-                placeholder="Tell us about your library..."
+                placeholder="Conte-nos sobre sua biblioteca, sua história, missão e serviços oferecidos..."
                 rows={4}
               />
               {errors.description && (
@@ -118,9 +146,9 @@ export default function RegisterLibraryPage() {
               )}
             </div>
 
-            <div className="flex justify-end">
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Registering..." : "Register Library"}
+            <div className="flex justify-end pt-4">
+              <Button type="submit" disabled={isSubmitting} size="lg">
+                {isSubmitting ? "Registrando..." : "Registrar Biblioteca"}
               </Button>
             </div>
           </form>
